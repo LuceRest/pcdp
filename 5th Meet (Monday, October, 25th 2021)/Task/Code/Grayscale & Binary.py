@@ -26,8 +26,8 @@ def browseImage():
     print("\n\n{}\n\n".format(img))
 
     imgTk = ImageTk.PhotoImage(img)
-    lbl.configure(image=imgTk)
-    lbl.image = imgTk
+    lblImg.configure(image=imgTk)
+    lblImg.image = imgTk
 
 
 def rgb2Gray():
@@ -45,41 +45,48 @@ def rgb2Gray():
             img.putpixel((x,y), (sum, sum, sum))
 
     imgTk = ImageTk.PhotoImage(img)
-    lbl.configure(image=imgTk)
-    lbl.image = imgTk
+    lblImg.configure(image=imgTk)
+    lblImg.image = imgTk
 
 
-def rgb2Binary():
+def rgb2BinaryBtn():
     global fln
     
-    imgGrayscale = Image.open(fln).convert('L')
-    pxGrayscale = imgGrayscale.load()
+    imgBinary = Image.open(fln).convert('L')
+    pxBinary = imgBinary.load()
 
-    horizontal = imgGrayscale.size[0]
-    vertical = imgGrayscale.size[1]
+    horizontal = imgBinary.size[0]
+    vertical = imgBinary.size[1]
     
     for x in range(horizontal):
         for y in range(vertical):
-            if pxGrayscale[x, y] < int(thresh.get()):
-                pxGrayscale[x, y] = 0
+            if pxBinary[x, y] < int(thresh.get()):
+                pxBinary[x, y] = 0
             else:
-                pxGrayscale[x, y] = 255
+                pxBinary[x, y] = 255
 
-    imgTk = ImageTk.PhotoImage(imgGrayscale)
-    lbl.configure(image=imgTk)
-    lbl.image = imgTk
+    imgTk = ImageTk.PhotoImage(imgBinary)
+    lblImg.configure(image=imgTk)
+    lblImg.image = imgTk
+
+    sliderBinary.set(thresh.get())
     thresh.delete(0, END)
 
+
+def rgb2BinarySlider(e):
+    global fln
+    
+    img = cv2.imread(fln, cv2.IMREAD_GRAYSCALE)
+    thresh = int(sliderBinary.get())
+    ret, imgBinary = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)
+
+    imgTk = opencv2Tkinter(imgBinary)
+    lblImg.configure(image=imgTk)
+    lblImg.image = imgTk
 
 
 
 def opencv2Tkinter(img):
-    # imgPill = Image.fromarray(img)
-    # imgResized = imgPill.resize((670, 480), Image.ANTIALIAS)
-    # imgTkinter = ImageTk.PhotoImage(imgResized)
-    # lbl.configure(image=imgTkinter)
-    # lbl.image = imgTkinter
-
     imgPill = Image.fromarray(img)
     imgTkinter = ImageTk.PhotoImage(imgPill)
     return imgTkinter
@@ -88,29 +95,32 @@ def opencv2Tkinter(img):
 if __name__ == '__main__':
     root = Tk()
 
-    frm = Frame(root, background='lightblue')
-    frm.pack(side=BOTTOM, padx=15, pady=15)
+    frmBtn = Frame(root)
+    frmBtn.pack(side=BOTTOM, padx=15, pady=15)
 
-    lbl = Label(root)
-    lbl.pack()
+    lblImg = Label(root)
+    lblImg.pack()
 
-    btn = Button(frm, text="Browser Image", command=browseImage)
-    btn.pack(side=tk.LEFT)
+    btn = Button(frmBtn, text="Browser Image", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=browseImage)
+    btn.grid(row=0, column=0)
 
-    btnGray = Button(frm, text="Convert to Grayscale", command=rgb2Gray)
-    btnGray.pack(side=tk.LEFT)
+    btnGray = Button(frmBtn, text="Convert to Grayscale", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=rgb2Gray)
+    btnGray.grid(row=0, column=1)
 
-    btnExit = Button(frm, text="Exit", command=lambda: exit())
-    btnExit.pack(side=tk.LEFT, padx=10)
+    btnExit = Button(frmBtn, text="Exit", background="#D9534F",activebackground='red', padx=2, pady=2, font="Normal 10", command=lambda: exit())
+    btnExit.grid(row=0, column=2)
 
-    txtBinary = Label(frm, text="Threshold", font="Normal 12")
-    txtBinary.pack(side=tk.LEFT)
+    txtBinary = Label(frmBtn, text="Threshold", font="Normal 10")
+    txtBinary.grid(row=1, column=0)
 
-    thresh = Entry(frm, font="Normal 12", bd=5)
-    thresh.pack(side=tk.LEFT)
+    thresh = Entry(frmBtn, font="Normal 10", bd=3)
+    thresh.grid(row=1, column=1)
     
-    btnBinary = Button(frm, text="Convert to Binary", command=rgb2Binary)
-    btnBinary.pack(side=tk.LEFT)
+    btnBinary = Button(frmBtn, text="Convert to Binary", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=rgb2BinaryBtn)
+    btnBinary.grid(row=1, column=2)
+    
+    sliderBinary = Scale(frmBtn, from_=0, to=255, orient=HORIZONTAL, length=255, cursor="hand2", repeatdelay=5000, command=rgb2BinarySlider)
+    sliderBinary.grid(row=2, column=0, columnspan=5)
     
 
 
