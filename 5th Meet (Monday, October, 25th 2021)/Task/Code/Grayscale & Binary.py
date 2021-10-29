@@ -1,3 +1,5 @@
+# 5200411488 - Arieska Restu Harpian Dwika
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
