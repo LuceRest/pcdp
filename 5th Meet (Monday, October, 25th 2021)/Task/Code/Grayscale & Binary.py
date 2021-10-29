@@ -9,8 +9,6 @@ import tkinter as tk
 from PIL import Image, ImageTk
     
 
-fln = None
-
 def browseImage():
     global fln
 
@@ -20,15 +18,11 @@ def browseImage():
                                         ("PNG File", "*.png"), 
                                         ("All Files", "*.*"))
                                     )
-    print("Image path : ", fln)
+
     img = Image.open(fln)
-
-    print("\n\n{}\n\n".format(img))
-
     imgTk = ImageTk.PhotoImage(img)
     lblImg.configure(image=imgTk)
     lblImg.image = imgTk
-
 
 def rgb2Gray():
     global fln
@@ -47,7 +41,6 @@ def rgb2Gray():
     imgTk = ImageTk.PhotoImage(img)
     lblImg.configure(image=imgTk)
     lblImg.image = imgTk
-
 
 def rgb2BinaryBtn():
     global fln
@@ -72,7 +65,6 @@ def rgb2BinaryBtn():
     sliderBinary.set(thresh.get())
     thresh.delete(0, END)
 
-
 def rgb2BinarySlider(e):
     global fln
     
@@ -84,8 +76,6 @@ def rgb2BinarySlider(e):
     lblImg.configure(image=imgTk)
     lblImg.image = imgTk
 
-
-
 def opencv2Tkinter(img):
     imgPill = Image.fromarray(img)
     imgTkinter = ImageTk.PhotoImage(imgPill)
@@ -94,6 +84,7 @@ def opencv2Tkinter(img):
 
 if __name__ == '__main__':
     root = Tk()
+    fln = None
 
     frmBtn = Frame(root)
     frmBtn.pack(side=BOTTOM, padx=15, pady=15)
@@ -101,13 +92,13 @@ if __name__ == '__main__':
     lblImg = Label(root)
     lblImg.pack()
 
-    btn = Button(frmBtn, text="Browser Image", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=browseImage)
+    btn = Button(frmBtn, text="Browser Image", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=browseImage)
     btn.grid(row=0, column=0)
 
-    btnGray = Button(frmBtn, text="Convert to Grayscale", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=rgb2Gray)
+    btnGray = Button(frmBtn, text="Convert to Grayscale", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=rgb2Gray)
     btnGray.grid(row=0, column=1)
 
-    btnExit = Button(frmBtn, text="Exit", background="#D9534F",activebackground='red', padx=2, pady=2, font="Normal 10", command=lambda: exit())
+    btnExit = Button(frmBtn, text="Exit", background="#F47174", activebackground='red', padx=4, pady=2, font="Normal 10",cursor="hand2", command=lambda: exit())
     btnExit.grid(row=0, column=2)
 
     txtBinary = Label(frmBtn, text="Threshold", font="Normal 10")
@@ -116,13 +107,12 @@ if __name__ == '__main__':
     thresh = Entry(frmBtn, font="Normal 10", bd=3)
     thresh.grid(row=1, column=1)
     
-    btnBinary = Button(frmBtn, text="Convert to Binary", background="lightblue",activebackground='#0275D8', padx=2, pady=2, font="Normal 10", command=rgb2BinaryBtn)
+    btnBinary = Button(frmBtn, text="Convert to Binary", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=rgb2BinaryBtn)
     btnBinary.grid(row=1, column=2)
     
-    sliderBinary = Scale(frmBtn, from_=0, to=255, orient=HORIZONTAL, length=255, cursor="hand2", repeatdelay=5000, command=rgb2BinarySlider)
+    sliderBinary = Scale(frmBtn, from_=0, to=255, orient=HORIZONTAL, length=255, cursor="hand2", command=rgb2BinarySlider)
     sliderBinary.grid(row=2, column=0, columnspan=5)
     
-
 
     root.title("Image Browser App - 5200411488")
     root.geometry("1280x720")
