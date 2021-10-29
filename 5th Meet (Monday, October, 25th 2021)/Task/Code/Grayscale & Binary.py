@@ -133,10 +133,56 @@ def rgb2Binary2():
             imgBinary.itemset((i,j,0),int(y))
             # img.putpixel((x,y), (y, y, y))
 
-    # imgPill = Image.fromarray(imgBinary)
-    imgTk = ImageTk.BitmapImage(imgBinary)
+    print(f'\n{imgBinary}\n-------------')
+
+    imgNp = np.asarray(imgBinary)
+    print(f'\n{imgNp}\n-------------')
+
+    imgPill = Image.fromarray(imgNp, mode="L")
+    print(f'\n{imgPill}\n-------------')
+
+    imgTk = ImageTk.BitmapImage(imgPill)
+    print(f'\n{imgTk}\n-------------')
+
     lbl.configure(image=imgTk)
     lbl.image = imgTk
+
+
+def rgb2Binary3():
+    global fln
+    
+    imgGrayscale = Image.open('mountain.jpg').convert('L')
+    pxGrayscale = imgGrayscale.load()
+
+    horizontal = imgGrayscale.size[0]
+    vertical = imgGrayscale.size[1]
+
+    thresh = 127
+    
+    for x in range(horizontal):
+        for y in range(vertical):
+            if pxGrayscale[x, y] < thresh:
+                pxGrayscale[x, y] = 0
+            else:
+                pxGrayscale[x, y] = 255
+
+    imgTk = ImageTk.PhotoImage(imgGrayscale)
+    lbl.configure(image=imgTk)
+    lbl.image = imgTk
+
+
+
+
+def opencv2Tkinter(img):
+    # imgPill = Image.fromarray(img)
+    # imgResized = imgPill.resize((670, 480), Image.ANTIALIAS)
+    # imgTkinter = ImageTk.PhotoImage(imgResized)
+    # lbl.configure(image=imgTkinter)
+    # lbl.image = imgTkinter
+
+    imgPill = Image.fromarray(img)
+    imgTkinter = ImageTk.PhotoImage(imgPill)
+    return imgTkinter
 
 
 if __name__ == '__main__':
@@ -154,7 +200,7 @@ if __name__ == '__main__':
     btnGray = Button(frm, text="Convert to Grayscale", command=rgb2Gray2)
     btnGray.pack(side=tk.LEFT)
 
-    btnBinary = Button(frm, text="Convert to Binary", command=rgb2Binary2)
+    btnBinary = Button(frm, text="Convert to Binary", command=rgb2Binary3)
     btnBinary.pack(side=tk.LEFT)
     
     btnExit = Button(frm, text="Exit", command=lambda: exit())
