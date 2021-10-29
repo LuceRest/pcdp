@@ -1,0 +1,10 @@
+Cara masuk ke environment :
+    Ketik di teminal python "Env\Scripts\activate" lalu enter
+
+Cara 2 masuk ke environment :
+    Ketik di teminal powershell "Env\Scripts\Activate.ps1" lalu enter
+
+Cara 3 masuk ke environment :
+    Masuk ke folder project
+    Ketik di teminal cmd "Env\Scripts\activate.bat" lalu enter
+
