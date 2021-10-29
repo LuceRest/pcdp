@@ -30,6 +30,8 @@ for i in np.arange(height):
         img_binary.itemset((i,j,0),int(y))
 
 
+print(f'\n\n{img_binary}\n\n')
+
 cv2.imshow("Binary", img_binary)
 
 cv2.waitKey(0)

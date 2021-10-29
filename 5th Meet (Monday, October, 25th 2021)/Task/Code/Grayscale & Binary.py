@@ -80,6 +80,8 @@ def rgb2Gray2():
 
         
 def rgb2Binary():
+    global fln
+    
     img = cv2.imread(fln)
     height, width, channels = img.shape
 
@@ -103,6 +105,40 @@ def rgb2Binary():
     lbl.image = imgTk
 
 
+def rgb2Binary2():
+    global fln
+    
+    img = Image.open(fln)
+    
+    for x in range(img.size[0]):
+        for y in range(img.size[1]):
+            r,g,b = img.getpixel((x,y))
+            r = (r * .299)
+            g = (g * .587)
+            b = (b * .114)
+            sum = int((r+g+b))
+            img.putpixel((x,y), (sum, sum, sum))
+
+    imgBinary = np.zeros((img.size[0],img.size[1],1))
+
+    thresh = 120
+    for i in np.arange(img.size[0]):
+        for j in np.arange(img.size[1]):
+            x = img.getpixel((i,j))[0]
+            if x >= thresh:
+                y = 1
+            else :
+                y = 0
+
+            imgBinary.itemset((i,j,0),int(y))
+            # img.putpixel((x,y), (y, y, y))
+
+    # imgPill = Image.fromarray(imgBinary)
+    imgTk = ImageTk.BitmapImage(imgBinary)
+    lbl.configure(image=imgTk)
+    lbl.image = imgTk
+
+
 if __name__ == '__main__':
     root = Tk()
 
@@ -118,7 +154,7 @@ if __name__ == '__main__':
     btnGray = Button(frm, text="Convert to Grayscale", command=rgb2Gray2)
     btnGray.pack(side=tk.LEFT)
 
-    btnBinary = Button(frm, text="Convert to Binary", command=rgb2Binary)
+    btnBinary = Button(frm, text="Convert to Binary", command=rgb2Binary2)
     btnBinary.pack(side=tk.LEFT)
     
     btnExit = Button(frm, text="Exit", command=lambda: exit())
