@@ -75,9 +75,6 @@ if __name__ == '__main__':
     btn = Button(frmBtn, text="Browser Image", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=browseImage)
     btn.grid(row=0, column=0)
 
-    # btnGray = Button(frmBtn, text="Convert to Grayscale", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=rgb2Gray)
-    # btnGray.grid(row=0, column=1)
-
     btnExit = Button(frmBtn, text="Exit", background="#F47174", activebackground='red', padx=4, pady=2, font="Normal 10",cursor="hand2", command=lambda: exit())
     btnExit.grid(row=0, column=2)
 
