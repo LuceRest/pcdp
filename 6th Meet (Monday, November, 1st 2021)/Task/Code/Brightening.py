@@ -85,8 +85,8 @@ def brighteningSlider(e):
     img = cv2.imread(fln)
 
     valBright = int(sldBright.get())
-    # m = np.ones(img.shape, dtype='uint8') * valBright
-    imgBright = cv2.add(img, valBright)
+    m = np.ones(img.shape, dtype='uint8') * valBright
+    imgBright = cv2.add(img, m)
     imgTk = opencv2Pill(imgBright)
     setResult(imgTk)
 
