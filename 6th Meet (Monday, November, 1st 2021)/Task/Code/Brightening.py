@@ -6,9 +6,44 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from tkinter import *
 from tkinter import filedialog
-import os
+from ttkbootstrap import Style
+from tkinter import ttk
 import tkinter as tk
+import os
 from PIL import Image, ImageTk
+
+
+def setOriginal(img):
+    imgTk = ImageTk.PhotoImage(img)
+    lblOriImg.configure(image=imgTk)
+    lblOriImg.image = imgTk
+    lblOriImg.pack()
+
+
+def setResult(img):
+    imgTk = ImageTk.PhotoImage(img)
+    lblResultImg.configure(image=imgTk)
+    lblResultImg.image = imgTk
+    lblResultImg.pack()
+
+
+def opencv2Pill(img):
+    imgPill = Image.fromarray(img)
+    # imgTkinter = ImageTk.PhotoImage(imgPill)
+    return imgPill
+
+def resizeImg(img):
+    width, height = 600, 512
+    img = cv2.resize(img, (width, height))
+    return img
+
+
+def clipping(intensity):
+    if intensity < 0:
+        return 0
+    if intensity > 255:
+        return 255
+    return intensity
 
 
 def browseImage():
@@ -22,23 +57,8 @@ def browseImage():
                                     )
 
     img = Image.open(fln)
-    imgTk = ImageTk.PhotoImage(img)
-    lblImg.configure(image=imgTk)
-    lblImg.image = imgTk
+    setOriginal(img)
 
-
-def opencv2Tkinter(img):
-    imgPill = Image.fromarray(img)
-    imgTkinter = ImageTk.PhotoImage(imgPill)
-    return imgTkinter
-
-
-def clipping(intensity):
-    if intensity < 0:
-        return 0
-    if intensity > 255:
-        return 255
-    return intensity
 
 def brightening():
     global fln
@@ -55,42 +75,72 @@ def brightening():
             g = clipping(px[x, y][1] + int(valBright.get()))
             b = clipping(px[x, y][2] + int(valBright.get()))
             px[x, y] = (r, g, b)
+    
+    setResult(img)
 
-    imgTk = ImageTk.PhotoImage(img)
-    lblImg.configure(image=imgTk)
-    lblImg.image = imgTk
 
+def brighteningSlider(e):
+    global fln
+    
+    img = cv2.imread(fln)
+
+    valBright = int(sldBright.get())
+    # m = np.ones(img.shape, dtype='uint8') * valBright
+    imgBright = cv2.add(img, valBright)
+    imgTk = opencv2Pill(imgBright)
+    setResult(imgTk)
+
+    # print(f'\n{int(sldBright.get())}\n')
 
 
 if __name__ == '__main__':
-    root = Tk()
     fln = None
+    style = Style()
+    window = style.master
 
-    frmBtn = Frame(root)
-    frmBtn.pack(side=BOTTOM, padx=15, pady=15)
 
-    lblImg = Label(root)
-    lblImg.pack()
+    frm = ttk.Frame(window, style='primary.TFrame')
+    # frm.pack(side='top')
+    frm.pack_propagate(0)
+    frm.pack(fill=tk.BOTH, expand=1)
 
-    btn = Button(frmBtn, text="Browser Image", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=browseImage)
-    btn.grid(row=0, column=0)
+    frmImgOri = ttk.Frame(frm, style='secondary.TFrame', width=600, height=512)
+    frmImgOri.pack_propagate(0)
+    frmImgOri.grid(row=0, column=0, padx=20, pady=30)
 
-    btnExit = Button(frmBtn, text="Exit", background="#F47174", activebackground='red', padx=4, pady=2, font="Normal 10",cursor="hand2", command=lambda: exit())
-    btnExit.grid(row=0, column=2)
+    frmImgRes = ttk.Frame(frm, style='secondary.TFrame', width=600, height=512)
+    frmImgRes.pack_propagate(0)
+    frmImgRes.grid(row=0, column=1, padx=20, pady=30)
 
-    txtBinary = Label(frmBtn, text="Value Bright", font="Normal 10")
-    txtBinary.grid(row=1, column=0)
+    frmBtn = ttk.Frame(frm, style='primary.TFrame', width=1000, height=100)
+    # frmImgRes.pack_propagate(0)
+    frmBtn.grid(row=1, column=0, columnspan=2, pady=20)
 
-    valBright = Entry(frmBtn, font="Normal 10", bd=3)
-    valBright.grid(row=1, column=1)
-    
-    btnBright = Button(frmBtn, text="Brightening", background="lightblue", activebackground='#0275D8', padx=2, pady=2, font="Normal 10",cursor="hand2", command=brightening)
-    btnBright.grid(row=1, column=2)
-    
-    # sliderBinary = Scale(frmBtn, from_=0, to=255, orient=HORIZONTAL, length=255, cursor="hand2", command=rgb2BinarySlider)
-    # sliderBinary.grid(row=2, column=0, columnspan=5)
-    
+    lblOriImg = ttk.Label(frmImgOri)
+    # lblOriImg.pack()
 
-    root.title("Image Browser App - 5200411488")
-    root.geometry("1280x720")
-    root.mainloop()
+    lblResultImg = ttk.Label(frmImgRes, style='info.TLabel')
+    # lblResultImg.grid(row=0, column=0)
+
+    btnBrowse = ttk.Button(frmBtn, text='Browse Image', style='info.TButton', cursor="hand2", command=browseImage)
+    btnBrowse.grid(row=0, column=0, columnspan=2, padx=15)
+
+    btnExit = ttk.Button(frmBtn, text='Exit', style='danger.TButton', cursor="hand2")
+    btnExit.grid(row=0, column=2, columnspan=2, padx=20)
+
+    valBright = ttk.Entry(frmBtn, style='info.TEntry')
+    valBright.grid(row=1, column=0, columnspan=2, padx=15, pady=10)
+
+    btnBright = ttk.Button(frmBtn, text='Brightening', style='info.TButton', cursor="hand2", command=brightening)
+    btnBright.grid(row=1, column=2, columnspan=2, padx=20, pady=10)
+
+    sldBright = ttk.Scale(frmBtn, from_=-255, to=255, value=0, orient='horizontal', style='info.Horizontal.TScale', length=511, command=brighteningSlider)
+    sldBright.grid(row=2, column=0, columnspan=4, padx=20, pady=10)
+
+
+    window.title("Image Browser App - 5200411488")
+    window.geometry("1280x720")
+    # window.resizable(0, 0)
+    window.mainloop()
+
+
