@@ -52,9 +52,9 @@ def browseImage():
 
     fln = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image File", 
                                     filetypes=(
+                                        ("All Files", "*.*",),
                                         ("PNG File", "*.png"), 
-                                        ("JPG File", "*.jpg"), 
-                                        ("All Files", "*.*"))
+                                        ("JPG File", "*.jpg"))
                                     )
 
     img = Image.open(fln)
