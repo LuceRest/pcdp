@@ -28,9 +28,10 @@ def setResult(img):
 
 
 def opencv2Pill(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     imgPill = Image.fromarray(img)
-    imgTkinter = ImageTk.PhotoImage(imgPill)
     return imgPill
+    
 
 def resizeImg(img):
     width, height = 600, 512
@@ -100,7 +101,6 @@ def darkening():
     valBright.delete(0, END)
 
 
-
 def brighteningSlider(e):
     global fln
     
@@ -114,10 +114,9 @@ def brighteningSlider(e):
         mtxBright = np.ones(img.shape, dtype="uint8") * abs(valBright)
         imgBright = cv2.subtract(img, mtxBright)
 
-    # imgTk = opencv2Pill(imgBright)
-    setResult(imgBright)
+    imgTk = opencv2Pill(imgBright)
+    setResult(imgTk)
 
-    # print(f'\n{int(sldBright.get())}\n')
 
 
 if __name__ == '__main__':
@@ -156,13 +155,13 @@ if __name__ == '__main__':
     btnExit.grid(row=0, column=2, columnspan=2, padx=20)
 
     btnDark = ttk.Button(frmBtn, text='-', style='info.TButton', cursor="hand2", command=darkening)
-    btnDark.grid(row=1, column=0, columnspan=2, padx=20, pady=10)
+    btnDark.grid(row=1, column=0, columnspan=2, padx=5, pady=10)
 
-    valBright = ttk.Entry(frmBtn, style='info.TEntry')
-    valBright.grid(row=1, column=1, columnspan=2, padx=15, pady=10)
+    valBright = ttk.Entry(frmBtn, style='info.TEntry', width=15)
+    valBright.grid(row=1, column=1, columnspan=2, padx=5, pady=10)
 
     btnBright = ttk.Button(frmBtn, text='+', style='info.TButton', cursor="hand2", command=brightening)
-    btnBright.grid(row=1, column=2, columnspan=2, padx=20, pady=10)
+    btnBright.grid(row=1, column=2, columnspan=2, padx=5, pady=10)
 
     sldBright = ttk.Scale(frmBtn, from_=-255, to=255, value=0, orient='horizontal', style='info.Horizontal.TScale', length=511, command=brighteningSlider)
     sldBright.grid(row=2, column=0, columnspan=4, padx=20, pady=10)
