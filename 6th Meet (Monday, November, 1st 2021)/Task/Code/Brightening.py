@@ -29,7 +29,7 @@ def setResult(img):
 
 def opencv2Pill(img):
     imgPill = Image.fromarray(img)
-    # imgTkinter = ImageTk.PhotoImage(imgPill)
+    imgTkinter = ImageTk.PhotoImage(imgPill)
     return imgPill
 
 def resizeImg(img):
@@ -51,8 +51,8 @@ def browseImage():
 
     fln = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image File", 
                                     filetypes=(
-                                        ("JPG File", "*.jpg"), 
                                         ("PNG File", "*.png"), 
+                                        ("JPG File", "*.jpg"), 
                                         ("All Files", "*.*"))
                                     )
 
@@ -85,10 +85,15 @@ def brighteningSlider(e):
     img = cv2.imread(fln)
 
     valBright = int(sldBright.get())
-    m = np.ones(img.shape, dtype='uint8') * valBright
-    imgBright = cv2.add(img, m)
-    imgTk = opencv2Pill(imgBright)
-    setResult(imgTk)
+    if valBright > 0:
+        mtxBright = np.ones(img.shape, dtype="uint8") * valBright
+        imgBright = cv2.add(img, mtxBright)
+    elif valBright < 0:
+        mtxBright = np.ones(img.shape, dtype="uint8") * abs(valBright)
+        imgBright = cv2.subtract(img, mtxBright)
+
+    # imgTk = opencv2Pill(imgBright)
+    setResult(imgBright)
 
     # print(f'\n{int(sldBright.get())}\n')
 
