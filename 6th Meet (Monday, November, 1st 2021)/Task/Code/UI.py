@@ -48,15 +48,19 @@ frmImgRes.grid(row=1, column=0, padx=15, pady=30)
 
 
 
-btnBrowse = ttk.Button(frmBtn, text='Browse Image', style='info.TButton', cursor="hand2", width=15)
-# btnBrowse.grid(row=0, column=0, columnspan=0, padx=15)
-btnBrowse.pack(side='top', pady=10)
+btnBrowse1 = ttk.Button(frmBtn, text='Browse Image 1', style='info.TButton', cursor="hand2", width=14)
+# btnBrowse1.grid(row=0, column=0, columnspan=0, padx=15)
+btnBrowse1.pack(side='top', pady=10)
 
-btnAdd = ttk.Button(frmBtn, text='+', style='info.TButton', cursor="hand2", width=2)
+btnBrowse2 = ttk.Button(frmBtn, text='Browse Image 2', style='info.TButton', cursor="hand2", width=14)
+# btnBrowse2.grid(row=0, column=0, columnspan=0, padx=15)
+btnBrowse2.pack(side='top', pady=10)
+
+btnAdd = ttk.Button(frmBtn, text='+', style='success.TButton', cursor="hand2", width=2)
 # btnAdd.grid(row=2, column=0, padx=5, pady=10)
 btnAdd.pack(side='top', pady=10)
 
-btnsubtract = ttk.Button(frmBtn, text='-', style='info.TButton', cursor="hand2", width=2)
+btnsubtract = ttk.Button(frmBtn, text='-', style='success.TButton', cursor="hand2", width=2)
 # btnsubtract.grid(row=1, column=0, padx=5, pady=10)
 btnsubtract.pack(side='top', pady=10)
 
