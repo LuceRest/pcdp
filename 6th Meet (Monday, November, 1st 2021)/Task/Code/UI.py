@@ -46,6 +46,10 @@ frmImgRes = ttk.Frame(frm, style='secondary.TFrame', width=320, height=240)
 frmImgRes.pack_propagate(0)
 frmImgRes.grid(row=1, column=0, padx=15, pady=30)
 
+frmImgResult = ttk.Frame(frmImgRes, style='info.TFrame', width=320, height=240)
+frmImgResult.pack_propagate(0)
+frmImgResult.grid(row=1, column=0, padx=30, pady=30)
+
 
 
 btnBrowse1 = ttk.Button(frmBtn, text='Browse Image 1', style='info.TButton', cursor="hand2", width=14)
@@ -56,13 +60,13 @@ btnBrowse2 = ttk.Button(frmBtn, text='Browse Image 2', style='info.TButton', cur
 # btnBrowse2.grid(row=0, column=0, columnspan=0, padx=15)
 btnBrowse2.pack(side='top', pady=10)
 
-btnAdd = ttk.Button(frmBtn, text='+', style='success.TButton', cursor="hand2", width=2)
-# btnAdd.grid(row=2, column=0, padx=5, pady=10)
-btnAdd.pack(side='top', pady=10)
+btnAdding = ttk.Button(frmBtn, text='+', style='success.TButton', cursor="hand2", width=2)
+# btnAdding.grid(row=2, column=0, padx=5, pady=10)
+btnAdding.pack(side='top', pady=10)
 
-btnsubtract = ttk.Button(frmBtn, text='-', style='success.TButton', cursor="hand2", width=2)
-# btnsubtract.grid(row=1, column=0, padx=5, pady=10)
-btnsubtract.pack(side='top', pady=10)
+btnSubtract = ttk.Button(frmBtn, text='-', style='success.TButton', cursor="hand2", width=2)
+# btnSubtract.grid(row=1, column=0, padx=5, pady=10)
+btnSubtract.pack(side='top', pady=10)
 
 # valBright = ttk.Entry(frmBtn, style='info.TEntry', width=15)
 # valBright.grid(row=1, column=1, columnspan=2, padx=5, pady=10)
@@ -78,7 +82,7 @@ lblOriImg1 = ttk.Label(frmImgOri1)
 lblOriImg2 = ttk.Label(frmImgOri2)
 # lblOriImg2.grid(row=0, column=0)
 
-lblResultImg = ttk.Label(frmImgRes)
+lblResultImg = ttk.Label(frmImgResult)
 # lblResultImg.grid(row=0, column=0)
 
 # sldBright = ttk.Scale(frmBtn, from_=-255, to=255, value=0, orient='horizontal', style='info.Horizontal.TScale', length=511)

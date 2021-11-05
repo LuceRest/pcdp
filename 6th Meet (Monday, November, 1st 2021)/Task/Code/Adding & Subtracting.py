@@ -39,7 +39,7 @@ def opencv2Pill(img):
     
 
 def resizeImg(img):
-    width, height = 600, 512
+    width, height = 320, 240
     img = cv2.resize(img, (width, height))
     return img
 
@@ -52,20 +52,87 @@ def clipping(intensity):
     return intensity
 
 
-def browseImage():
-    global fln
+def browseImage1():
+    global fln1
 
-    fln = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image File", 
+    fln1 = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image File", 
                                     filetypes=(
                                         ("All Files", "*.*",),
                                         ("PNG File", "*.png"), 
                                         ("JPG File", "*.jpg"))
                                     )
 
-    img = Image.open(fln)
+    img = opencv2Pill(resizeImg(cv2.imread(fln1)))
     setOriginal1(img)
 
+
+def browseImage2():
+    global fln2
+
+    fln2 = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select Image File", 
+                                    filetypes=(
+                                        ("All Files", "*.*",),
+                                        ("PNG File", "*.png"), 
+                                        ("JPG File", "*.jpg"))
+                                    )
+
+    img = opencv2Pill(resizeImg(cv2.imread(fln2)))
+    setOriginal2(img)
+
+
+def adding():
+    global fln1, fln2
+
+    img1 = opencv2Pill(resizeImg(cv2.imread(fln1)))
+    px1 = img1.load()
+
+    img2 = opencv2Pill(resizeImg(cv2.imread(fln2)))
+    px2 = img2.load()
+
+    hor = img1.size[0]
+    ver = img1.size[1]
+
+    imgResult = Image.new("RGB", (hor, ver))
+    pxResult = imgResult.load()
+
+    for x in range(hor):
+        for y in range(ver):
+            r = clipping(px1[x, y][0] + px2[x, y][0])
+            g = clipping(px1[x, y][1] + px2[x, y][1])
+            b = clipping(px1[x, y][2] + px2[x, y][2])
+            pxResult[x, y] = (r, g, b)
+
+    setResult(imgResult)
+
+
+def subtracting():
+    global fln1, fln2
+
+    img1 = opencv2Pill(resizeImg(cv2.imread(fln1)))
+    px1 = img1.load()
+
+    img2 = opencv2Pill(resizeImg(cv2.imread(fln2)))
+    px2 = img2.load()
+
+    hor = img1.size[0]
+    ver = img1.size[1]
+
+    imgResult = Image.new("RGB", (hor, ver))
+    pxResult = imgResult.load()
+
+    for x in range(hor):
+        for y in range(ver):
+            r = clipping(px1[x, y][0] - px2[x, y][0])
+            g = clipping(px1[x, y][1] - px2[x, y][1])
+            b = clipping(px1[x, y][2] - px2[x, y][2])
+            pxResult[x, y] = (r, g, b)
+
+    setResult(imgResult)
+
+
+
 if __name__ == '__main__':
+    fln1, fln2 = None, None
     style = Style()
     window = style.master
 
@@ -92,30 +159,36 @@ if __name__ == '__main__':
     frmImgRes.pack_propagate(0)
     frmImgRes.grid(row=1, column=0, padx=15, pady=30)
 
-    btnBrowse = ttk.Button(frmBtn, text='Browse Image', style='info.TButton', cursor="hand2", width=15)
-    btnBrowse.pack(side='top', pady=10)
+    frmImgResult = ttk.Frame(frmImgRes, style='info.TFrame', width=320, height=240)
+    frmImgResult.pack_propagate(0)
+    frmImgResult.grid(row=1, column=0, padx=30, pady=30)
 
-    btnAdd = ttk.Button(frmBtn, text='+', style='info.TButton', cursor="hand2", width=2)
-    btnAdd.pack(side='top', pady=10)
+    btnBrowse1 = ttk.Button(frmBtn, text='Browse Image 1', style='info.TButton', cursor="hand2", width=14, command=browseImage1)
+    btnBrowse1.pack(side='top', pady=10)
 
-    btnsubtract = ttk.Button(frmBtn, text='-', style='info.TButton', cursor="hand2", width=2)
-    btnsubtract.pack(side='top', pady=10)
+    btnBrowse2 = ttk.Button(frmBtn, text='Browse Image 2', style='info.TButton', cursor="hand2", width=14, command=browseImage2)
+    btnBrowse2.pack(side='top', pady=10)
 
-    btnExit = ttk.Button(frmBtn, text='Exit', style='danger.TButton', cursor="hand2")
+    btnAdding = ttk.Button(frmBtn, text='+', style='success.TButton', cursor="hand2", width=2, command=adding)
+    btnAdding.pack(side='top', pady=10)
+
+    btnSubtract = ttk.Button(frmBtn, text='-', style='success.TButton', cursor="hand2", width=2, command=subtracting)
+    btnSubtract.pack(side='top', pady=10)
+
+    btnExit = ttk.Button(frmBtn, text='Exit', style='danger.TButton', cursor="hand2", command=lambda: exit())
     btnExit.pack(side='top', pady=10)
 
     lblOriImg1 = ttk.Label(frmImgOri1)
-    # lblOriImg1.grid(row=0, column=0)
-
     lblOriImg2 = ttk.Label(frmImgOri2)
-    # lblOriImg2.grid(row=0, column=0)
+    lblResultImg = ttk.Label(frmImgResult)
 
-    lblResultImg = ttk.Label(frmImgRes)
-    # lblResultImg.grid(row=0, column=0)
 
     window.title("Adding or Subtracting Images  - 5200411488")
     # window.geometry("1280x720")
     # window.resizable(0, 0)
     window.mainloop()
+
+
+
 
 
