@@ -1,3 +1,5 @@
+# ----------| Resize |----------
+
 from PIL import Image
 
 img = Image.open("messi5.jpg")
