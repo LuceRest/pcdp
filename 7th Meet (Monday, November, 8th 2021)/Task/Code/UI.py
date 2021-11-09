@@ -34,7 +34,7 @@ frmImgOri2 = ttk.Frame(frmImgOri, style='info.TFrame', width=384, height=256)
 frmImgOri2.pack_propagate(0)
 frmImgOri2.pack(side="left", padx=20, pady=20)
 
-frmSld = ttk.Frame(frm, style='secondary.TFrame', width=942, height=25)
+frmSld = ttk.Frame(frm, style='secondary.TFrame', width=942, height=50)
 frmSld.pack_propagate(0)
 frmSld.grid(row=1, column=0, padx=20, pady=(0,10))
 # frmSld.grid_propagate(0)
