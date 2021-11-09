@@ -27,10 +27,10 @@ dst = cv.add(img1_bg, img2_fg)
 img1[0:img_2_shape[0], 0:img_2_shape[1]] = dst
 # Create resizable windows for our display images
 
-cv.imshow('mask', mask)
-cv.imshow('maskinv', mask_inv)
-cv.imshow('img1_bg', img1_bg)
-cv.imshow('img2_fg', img2_fg)
+cv.imshow('1', mask)
+cv.imshow('2', mask_inv)
+cv.imshow('3', img1_bg)
+cv.imshow('4', img2_fg)
 cv.imshow('res', img1)
 
 
