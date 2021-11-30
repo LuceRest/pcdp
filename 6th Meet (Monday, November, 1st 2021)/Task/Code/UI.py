@@ -26,7 +26,7 @@ frmImgOri = ttk.Frame(frm, style='secondary.TFrame', width=900, height=500)
 frmImgOri.grid(row=0, column=0, padx=25, pady=25)
 
 frmImgOri1 = ttk.Frame(frmImgOri, style='info.TFrame', width=320, height=240)
-frmImgOri1.pack_propagate(0)
+frmImgOri1.pack_propagate(0)    
 frmImgOri1.pack(side="left", padx=20, pady=30)
 
 frmBtn = ttk.Frame(frmImgOri, style='secondary.TFrame', width=100, height=200)
