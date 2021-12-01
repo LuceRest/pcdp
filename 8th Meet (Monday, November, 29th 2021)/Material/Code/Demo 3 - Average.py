@@ -1,7 +1,7 @@
 import cv2
 from matplotlib import pyplot as plt
 
-image = cv2.imread('images/sample.png') # reads the image
+image = cv2.imread('8th Meet (Monday, November, 29th 2021)\Material\Resource\sample.png') # reads the image
 image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert to HSV
 
 figure_size = 9 # the dimension of the x and y axis of the kernal.

@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 # Read the image
-img = cv2.imread('images/sample.png', 0)
+img = cv2.imread('8th Meet (Monday, November, 29th 2021)\Material\Resource\sample.png', 0)
 
 # Obtain number of rows and columns of the image
 m, n = img.shape
@@ -13,6 +13,7 @@ print("Image dimens", img.shape)
 # Averaging filter(3, 3) mask
 mask = np.ones([3, 3], dtype=int)
 mask = mask / 9
+# print(f'mask : {mask}')
 
 # Convolve the 3X3 mask over the image
 img_new = np.zeros([m, n])
@@ -29,4 +30,4 @@ img_new = img_new.astype(np.uint8)
 m, n = img.shape
 print("Image dimens", img_new.shape)
 
-cv2.imwrite('result/sample_filter.jpg', img_new)
+cv2.imwrite('8th Meet (Monday, November, 29th 2021)\Material\Resource\sample_filter.jpg', img_new)
