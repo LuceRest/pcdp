@@ -54,8 +54,3 @@ cv2.imshow('Stages', vStack)
 cv2.imshow('Result', roi)
 
 cv2.waitKey(0)
-
-
-# plt.figure(figsize=(12, 6))
-# plt.title("Result"), plt.imshow(cv2.cvtColor(roi, cv2.COLOR_BGR2RGB))
-# plt.show()
