@@ -3,7 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-image = cv2.imread("coin_dataset/image_gray.png")
+image = cv2.imread("12 Meet (Monday, December, 27th 2021)\Material\Resource\image_gray.png")
 roi = image[0:500, 0:500]
 
 img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
