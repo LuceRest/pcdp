@@ -26,7 +26,7 @@ imgDilate = cv2.dilate(imgClosing, kernel, iterations=2)
 contImg = imgDilate.copy()
 contours, hierarchy = cv2.findContours(contImg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-num = 1
+# Draw Contour
 for cnt in contours:
     area = cv2.contourArea(cnt)
 
@@ -36,30 +36,23 @@ for cnt in contours:
         continue
 
     ellipse = cv2.fitEllipse(cnt)
+    x = int(ellipse[0][0])-20
+    y = int(ellipse[0][1])+10
     if area >= 4500 and area <= 5000:       # Rp 100
         cv2.ellipse(roi, ellipse, (255,0,0), 2)
-        x = int(ellipse[0][0])-20
-        y = int(ellipse[0][1])+10
         cv2.putText(roi, '100', (x,y), cv2.FONT_HERSHEY_COMPLEX, .75, (0,255,0), 2)
     elif area > 5000 and area < 5500:       # Rp 500 perunggu
         cv2.ellipse(roi, ellipse, (255,255,0), 2)
-        x = int(ellipse[0][0])-20
-        y = int(ellipse[0][1])+10
         cv2.putText(roi, '500', (x,y), cv2.FONT_HERSHEY_COMPLEX, .75, (0,255,0), 2)
     elif area >= 5500 and area <= 6000:     # Rp 200
         cv2.ellipse(roi, ellipse, (255,0,255), 2)
-        x = int(ellipse[0][0])-20
-        y = int(ellipse[0][1])+10
         cv2.putText(roi, '200', (x,y), cv2.FONT_HERSHEY_COMPLEX, .75, (0,255,0), 2)
     elif area > 6000 and area <= 7000:      # Rp 500 perak
         cv2.ellipse(roi, ellipse, (0,255,0), 2)
-        x = int(ellipse[0][0])-20
-        y = int(ellipse[0][1])+10
         cv2.putText(roi, '500', (x,y), cv2.FONT_HERSHEY_COMPLEX, .75, (0,255,0), 2)
     else:   
         # print(f'area {num} : {area}\n') 
         cv2.ellipse(roi, ellipse, (0,0,255), 2)
-    num += 1
 
 # Resize image
 imgGray = cv2.resize(imgGray, (0,0), None, 0.5, 0.5)
@@ -69,6 +62,8 @@ imgErode = cv2.resize(imgErode, (0,0), None, 0.5, 0.5)
 imgClosing = cv2.resize(imgClosing, (0,0), None, 0.5, 0.5)
 imgDilate = cv2.resize(imgDilate, (0,0), None, 0.5, 0.5)
 
+imgResult = cv2.resize(roi, (0,0), None, 0.5, 0.5)
+
 # Stacking image
 hStack1 = np.hstack([imgGray, imgBlur, thresh])
 hStack2 = np.hstack([imgErode, imgClosing, imgDilate])
@@ -76,5 +71,6 @@ vStack = np.vstack([hStack1, hStack2])
 
 cv2.imshow('Stages', vStack)
 cv2.imshow('Result', roi)
+cv2.imshow('imgResult', imgResult)
 
 cv2.waitKey(0)
