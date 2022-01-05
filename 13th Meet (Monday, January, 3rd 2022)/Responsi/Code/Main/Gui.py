@@ -34,10 +34,10 @@ frmImgGray = ttk.Frame(frmRes, style='info.TFrame', width=125, height=175)
 frmImgGray.grid(row=0, column=1, padx=20, pady=20)
 
 frmImgBiner = ttk.Frame(frmRes, style='info.TFrame', width=125, height=175)
-frmImgBiner.grid(row=0, column=2, padx=20, pady=20)
+frmImgBiner.grid(row=0, column=2, padx=(20,20), pady=20)
 
-frmImgBlank = ttk.Frame(frmRes, style='secondary.TFrame', width=125, height=175)
-frmImgBlank.grid(row=0, column=3, padx=20, pady=20)
+# frmImgBlank = ttk.Frame(frmRes, style='secondary.TFrame', width=125, height=175)
+# frmImgBlank.grid(row=0, column=3, padx=20, pady=20)
 
 # Label
 lblOri = ttk.Label(frmRes, text=f'Citra Asli Fullcolor', style='secondary.Inverse.TLabel')
@@ -54,7 +54,7 @@ frmBtnRes = ttk.Frame(frmRes, style='secondary.TFrame', width=625, height=75)
 frmBtnRes.grid(row=2, column=0, columnspan=4, padx=20, pady=10)
 
 btnBrowse = ttk.Button(frmBtnRes, text='Browse Image', style='success.TButton', cursor="hand2", width=12)
-btnBrowse.grid(row=0, column=0, columnspan=1, padx=(40,75), pady=10)
+btnBrowse.grid(row=0, column=0, columnspan=1, padx=(100,15), pady=10)
 
 btnThresh = ttk.Button(frmBtnRes, text='Threshold', style='success.TButton', cursor="hand2", width=12)
 btnThresh.grid(row=0, column=2, padx=(60,10), pady=10)
