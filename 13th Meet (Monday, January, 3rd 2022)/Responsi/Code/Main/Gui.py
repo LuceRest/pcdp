@@ -36,7 +36,7 @@ frmImgGray.grid(row=0, column=1, padx=20, pady=20)
 frmImgBiner = ttk.Frame(frmRes, style='info.TFrame', width=125, height=175)
 frmImgBiner.grid(row=0, column=2, padx=20, pady=20)
 
-frmImgBlank = ttk.Frame(frmRes, style='warning.TFrame', width=125, height=175)
+frmImgBlank = ttk.Frame(frmRes, style='secondary.TFrame', width=125, height=175)
 frmImgBlank.grid(row=0, column=3, padx=20, pady=20)
 
 # Label
