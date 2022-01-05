@@ -49,6 +49,11 @@ lblGray.grid(row=1, column=1, padx=20, pady=(5, 10))
 lblBiner = ttk.Label(frmRes, text=f'Citra Biner', style='secondary.Inverse.TLabel')
 lblBiner.grid(row=1, column=2, padx=20, pady=(5, 10))
 
+# Label Image
+lblImgOri = ttk.Label(frmImgOri)
+lblImgGray = ttk.Label(frmImgGray)
+lblImgBiner = ttk.Label(frmImgBiner)
+
 # Button
 frmBtnRes = ttk.Frame(frmRes, style='secondary.TFrame', width=625, height=75)
 frmBtnRes.grid(row=2, column=0, columnspan=4, padx=20, pady=10)
@@ -107,6 +112,15 @@ lblProcess5.grid(row=1, column=4, padx=20, pady=(5, 20))
 lblProcess6 = ttk.Label(frmProcess, text=f'Citra Hasil \n(Operasi #6)', style='secondary.Inverse.TLabel')
 lblProcess6.grid(row=1, column=5, padx=20, pady=(5, 20))
 
+# Label Image
+lblImgProcess1 = ttk.Label(frmImgProcess1)
+lblImgProcess2 = ttk.Label(frmImgProcess2)
+lblImgProcess3 = ttk.Label(frmImgProcess3)
+lblImgProcess4 = ttk.Label(frmImgProcess4)
+lblImgProcess5 = ttk.Label(frmImgProcess5)
+lblImgProcess6 = ttk.Label(frmImgProcess6)
+
+
 
 # ----------| Result |----------
 
@@ -123,6 +137,10 @@ frmImgResult.grid(row=1, column=0, padx=20, pady=(10,5))
 # Label
 lblResult = ttk.Label(frmResult, text=f'Citra Final Hasil Segmentasi', style='secondary.Inverse.TLabel')
 lblResult.grid(row=2, column=0, padx=20, pady=(5,25))
+
+# Label Image
+lblImgResult = ttk.Label(frmImgResult)
+
 
 # Button
 btnProccess = ttk.Button(frmBtnResult, text='Proccess', style='success.TButton', cursor="hand2", width=12)
